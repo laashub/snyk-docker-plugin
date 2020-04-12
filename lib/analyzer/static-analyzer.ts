@@ -19,6 +19,10 @@ import {
   getAptFiles,
   getDpkgPackageFileContentAction,
 } from "../inputs/distroless/static";
+import {
+  getNodeAppFileContent,
+  getNodeAppFileContentAction,
+} from "../inputs/node/static";
 import { getOsReleaseActions } from "../inputs/os-release/static";
 import {
   getRpmDbFileContent,
@@ -52,6 +56,7 @@ export async function analyze(
     ...getOsReleaseActions,
     getNodeBinariesFileContentAction,
     getOpenJDKBinariesFileContentAction,
+    getNodeAppFileContentAction,
   ];
 
   if (options.distroless) {
@@ -64,6 +69,10 @@ export async function analyze(
   );
 
   const archiveLayers = dockerArchive.layers;
+
+  const tmp = getNodeAppFileContent(archiveLayers);
+  console.log(tmp);
+  // TODO analyse
 
   const [
     apkDbFileContent,
